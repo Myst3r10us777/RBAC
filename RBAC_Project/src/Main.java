@@ -38,5 +38,7 @@ public class Main{
     }
     public static void main(String[] args){
         validTest();
+        Permission per = new Permission("Read", "users", "Читаем пользователя");
+        System.out.println(per.format());
     }
 }
