@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 public class Main{
     private static void validTest(){
         System.out.println("Тестирование валидации:");
@@ -40,5 +42,10 @@ public class Main{
         validTest();
         Permission per = new Permission("Read", "users", "Читаем пользователя");
         System.out.println(per.format());
+        Set<Permission> permissions = new HashSet<>();
+        permissions.add(per);
+
+        Role admin = new Role("Admin", "can everything", permissions);
+        System.out.println(admin.format());
     }
 }
