@@ -47,5 +47,8 @@ public class Main{
 
         Role admin = new Role("Admin", "can everything", permissions);
         System.out.println(admin.format());
+
+        AssignmentMetadata a = AssignmentMetadata.now("admin", "tak hochy");
+        System.out.println(a.format());
     }
 }
