@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Role {
-    private String id;
-    private String name;
-    private String description;
-    private final Set<Permission> permissions;
+    String id;
+    String name;
+    String description;
+    final Set<Permission> permissions;
     public Role(String name, String description, Set<Permission> permissions){
         this.id = generateId();
         this.name = name;
@@ -14,6 +14,10 @@ public class Role {
 
     private String generateId(){
         return "role_" + UUID.randomUUID();
+    }
+
+    public String name(){
+        return name;
     }
 
     public void addPermission(Permission permission){
@@ -65,6 +69,7 @@ public class Role {
         }
         return str;
     }
+
 
     public String format(){
         String str = "Role: " + name + " [ID: " + id + "]\n" +

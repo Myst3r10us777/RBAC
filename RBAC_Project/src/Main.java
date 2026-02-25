@@ -40,6 +40,7 @@ public class Main{
     }
     public static void main(String[] args){
         validTest();
+        User user = User.create("Vasya", "Vasuy1", "vasya@gmail.com");
         Permission per = new Permission("Read", "users", "Читаем пользователя");
         System.out.println(per.format());
         Set<Permission> permissions = new HashSet<>();
@@ -50,5 +51,6 @@ public class Main{
 
         AssignmentMetadata a = AssignmentMetadata.now("admin", "tak hochy");
         System.out.println(a.format());
+
     }
 }
