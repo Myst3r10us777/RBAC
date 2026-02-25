@@ -15,6 +15,10 @@ abstract class AbstractRoleAssignment implements RoleAssignment {
     }
 
     @Override
+    public String assignmentId(){
+        return assignmentId;
+    }
+    @Override
     public User user(){
         return user;
     }
