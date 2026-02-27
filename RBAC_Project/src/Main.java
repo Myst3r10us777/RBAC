@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 public class Main{
@@ -52,5 +54,13 @@ public class Main{
         AssignmentMetadata a = AssignmentMetadata.now("admin", "tak hochy");
         System.out.println(a.format());
 
+        LocalDateTime date = LocalDateTime.of(2027, 12, 31, 23, 59);
+        String expiresAt = date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        PermanentAssignment permanent = new PermanentAssignment(user, admin, a);
+        System.out.println(permanent.summary());
+
+        TemporaryAssignment temp = new TemporaryAssignment(user, admin, a, expiresAt, false);
+        System.out.println(temp.summary());
     }
 }

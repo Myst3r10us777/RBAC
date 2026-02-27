@@ -32,6 +32,7 @@ abstract class AbstractRoleAssignment implements RoleAssignment {
     public AssignmentMetadata metadata(){
         return metadata;
     }
+
     public abstract boolean isActive();
 
     public abstract String assignmentType();
