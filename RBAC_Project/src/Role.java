@@ -8,7 +8,7 @@ public class Role {
     public Role(String name, String description, Set<Permission> permissions){
         this.id = generateId();
         this.name = name;
-        this.description=description;
+        this.description = description;
         this.permissions = new HashSet<>(permissions);
     }
 

@@ -62,5 +62,10 @@ public class Main{
 
         TemporaryAssignment temp = new TemporaryAssignment(user, admin, a, expiresAt, false);
         System.out.println(temp.summary());
+        System.out.println("===========================================\n 2 DZ:\n");
+        UserFilter name = UserFilters.byUsername("Vasya");
+        UserFilter domen = UserFilters.byEmailDomain("@gmal.com");
+        boolean testFil = domen.test(user);
+        System.out.println(testFil);
     }
 }
