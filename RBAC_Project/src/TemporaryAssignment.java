@@ -3,8 +3,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TemporaryAssignment extends AbstractRoleAssignment {
-    private String expiresAt;
-    private boolean autoRenew;
+    public String expiresAt;
+    public boolean autoRenew;
 
     public TemporaryAssignment(User user, Role role, AssignmentMetadata metadata, String expiresAt, boolean autoRenew) {
         super(user, role, metadata);
