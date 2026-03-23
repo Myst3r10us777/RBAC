@@ -1,4 +1,6 @@
-//@FunctionalInterface
-//interface Command {
-//    //void execute(Scanner scanner, RBACSystem system);
-//}
+import java.util.Scanner;
+
+@FunctionalInterface
+interface Command {
+    void execute(Scanner scanner, String args, RBACSystem system);
+}

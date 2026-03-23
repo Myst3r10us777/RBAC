@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 public class Main{
     private static void validTest(){
@@ -77,5 +78,30 @@ public class Main{
         system.initialize();
 
         System.out.println(system.generateStatistics());
+
+        CommandParser pars = new CommandParser();
+        pars.registerCommand("help", "HELP", new Command() {
+            @Override
+            public void execute(Scanner scanner, String args, RBACSystem system) {
+                pars.printHelp();
+            }
+        });
+
+        pars.registerCommand("exit", "Exit from program", null);
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print(": ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            pars.parseAndExecute(input, scanner, system);
+            System.out.println();
+        }
+
+        scanner.close();
     }
 }
