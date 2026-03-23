@@ -1,4 +1,4 @@
-@FunctionalInterface
-interface Command {
-    void execute(Scanner scanner, RBACSystem system);
-}
+//@FunctionalInterface
+//interface Command {
+//    //void execute(Scanner scanner, RBACSystem system);
+//}

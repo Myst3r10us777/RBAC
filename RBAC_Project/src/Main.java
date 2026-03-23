@@ -67,5 +67,15 @@ public class Main{
         UserFilter domen = UserFilters.byEmailDomain("@gmal.com");
         boolean testFil = domen.test(user);
         System.out.println(testFil);
+
+        UserManager userManager = new UserManager();
+        RoleManager roleManager = new RoleManager();
+        AssignmentManager assignmentManager = new AssignmentManager(userManager, roleManager);
+
+        RBACSystem system = new RBACSystem(userManager, roleManager, assignmentManager, "system");
+
+        system.initialize();
+
+        System.out.println(system.generateStatistics());
     }
 }
