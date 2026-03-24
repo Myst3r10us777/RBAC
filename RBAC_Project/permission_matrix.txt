@@ -1,0 +1,6 @@
+Permission Matrix:
+--------------------------------------------------------------------------------
+User/Resource        | assignments | roles      | users     
+----------------------------------------------------------------------------------------------------
+vova                 | READ       | READ       | READ      
+ADMIN                | READ,DELETE,WRITE | READ,DELETE,WRITE | READ,DELETE,WRITE

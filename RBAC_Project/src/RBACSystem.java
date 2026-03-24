@@ -7,12 +7,18 @@ public class RBACSystem {
     private RoleManager roleManager;
     private AssignmentManager assignmentManager;
     private String currentUser;
+    private AuditLog AuditLog;
 
     public RBACSystem(UserManager userManager, RoleManager roleManager, AssignmentManager assignmentManager, String currentUser) {
         this.userManager = userManager;
         this.roleManager = roleManager;
         this.assignmentManager = assignmentManager;
         this.currentUser = currentUser;
+        this.AuditLog = new AuditLog();
+    }
+
+    public AuditLog getAuditLog(){
+        return AuditLog;
     }
 
     public UserManager getUserManager(){

@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandParser {
     Map<String, Command> commands = new HashMap<>();
@@ -23,12 +21,21 @@ public class CommandParser {
         command.execute(scanner, args, system);
     }
 
-    public void printHelp(){
+    public void printHelp() {
+        List<Map.Entry<String, String>> sorted = new ArrayList<>(commandDescriptions.entrySet());
+        sorted.sort(Map.Entry.comparingByKey());
+
+        String[] headers = {"№", "Command", "Description"};
+        List<String[]> rows = new ArrayList<>();
         int i = 1;
-        for (Map.Entry<String, String> entry : commandDescriptions.entrySet()) {
-            System.out.println(i + ") " + entry.getKey() + ": " + entry.getValue() + '\n');
-            i++;
+        for (Map.Entry<String, String> entry : sorted) {
+            rows.add(new String[]{
+                    String.valueOf(i++),
+                    entry.getKey(),
+                    entry.getValue()
+            });
         }
+        System.out.println(FormatUtils.formatTable(headers, rows));
     }
 
     public void parseAndExecute(String input, Scanner scanner, RBACSystem system){
