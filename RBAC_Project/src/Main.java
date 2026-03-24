@@ -77,17 +77,10 @@ public class Main{
 
         system.initialize();
 
-        System.out.println(system.generateStatistics());
 
         CommandParser pars = new CommandParser();
-        pars.registerCommand("help", "HELP", new Command() {
-            @Override
-            public void execute(Scanner scanner, String args, RBACSystem system) {
-                pars.printHelp();
-            }
-        });
-
-        pars.registerCommand("exit", "Exit from program", null);
+        CommandRegistry registry = new CommandRegistry();
+        registry.RegistryAllCommands(pars);
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
