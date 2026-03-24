@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 public class Main{
     private static void validTest(){
@@ -67,5 +68,33 @@ public class Main{
         UserFilter domen = UserFilters.byEmailDomain("@gmal.com");
         boolean testFil = domen.test(user);
         System.out.println(testFil);
+
+        UserManager userManager = new UserManager();
+        RoleManager roleManager = new RoleManager();
+        AssignmentManager assignmentManager = new AssignmentManager(userManager, roleManager);
+
+        RBACSystem system = new RBACSystem(userManager, roleManager, assignmentManager, "system");
+
+        system.initialize();
+
+
+        CommandParser pars = new CommandParser();
+        CommandRegistry registry = new CommandRegistry();
+        registry.RegistryAllCommands(pars);
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print(": ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            pars.parseAndExecute(input, scanner, system);
+            System.out.println();
+        }
+
+        scanner.close();
     }
 }
