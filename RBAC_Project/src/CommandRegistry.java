@@ -981,6 +981,35 @@ public class CommandRegistry {
             system.getAuditLog().printLog();
         }));
 
+        // ==================== REPORT COMMANDS ====================
+
+        pars.registerCommand("report-users", "Generate user report", ((scanner, args, system) -> {
+            String report = ReportGenerator.generateUserReport(
+                    system.getUserManager(),
+                    system.getAssignmentManager()
+            );
+            ReportGenerator.exportToFile(report, "user_report.txt");
+            System.out.println(report);
+        }));
+
+        pars.registerCommand("report-roles", "Generate role report", ((scanner, args, system) -> {
+            String report = ReportGenerator.generateRoleReport(
+                    system.getRoleManager(),
+                    system.getAssignmentManager()
+            );
+            ReportGenerator.exportToFile(report, "role_report.txt");
+            System.out.println(report);
+        }));
+
+        pars.registerCommand("report-matrix", "Generate permission matrix", ((scanner, args, system) -> {
+            String report = ReportGenerator.generatePermissionMatrix(
+                    system.getUserManager(),
+                    system.getAssignmentManager()
+            );
+            ReportGenerator.exportToFile(report, "permission_matrix.txt");
+            System.out.println(report);
+        }));
+
     }
 }
 
