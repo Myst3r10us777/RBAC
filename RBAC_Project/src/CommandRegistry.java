@@ -33,6 +33,7 @@ public class CommandRegistry {
             try{
                 User user = User.create(username, fullName, email);
                 system.getUserManager().add(user);
+                system.getAuditLog().log("Created user", system.getCurrentUser(), username, "user-create created: " + username);
             } catch (Exception e){
                 System.out.println("Error: " + e.getMessage());
             }
@@ -101,6 +102,7 @@ public class CommandRegistry {
                 }
                 system.getUserManager().remove(u);
                 System.out.println("User: " + username + " - removed");
+                system.getAuditLog().log("Delete user", system.getCurrentUser(), username, "user-delete deleted: " + username);
             }
         }));
 
@@ -206,6 +208,7 @@ public class CommandRegistry {
                     system.getRoleManager().addPermissionToRole(roleName, perm);
                     System.out.println("Permission added!");
                 }
+                system.getAuditLog().log("Created role", system.getCurrentUser(), roleName, "role-create created: " + roleName);
                 System.out.println("Role creation completed!");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
@@ -292,7 +295,7 @@ public class CommandRegistry {
                     system.getAssignmentManager().remove(ra);
                 }
             }
-
+            system.getAuditLog().log("Delete role", system.getCurrentUser(), roleName, "role-delete deleted: " + roleName);
             system.getRoleManager().remove(role);
             System.out.println("Role '" + roleName + "' deleted");
         }));
@@ -503,6 +506,7 @@ public class CommandRegistry {
                     assignment = new PermanentAssignment(user, role, metadata);
                 }
                 system.getAssignmentManager().add(assignment);
+                system.getAuditLog().log("Assign role", system.getCurrentUser(), username, "assign-role assign to: " + username);
                 System.out.println("Role '" + role.name() + "' assigned to '" + username + "'");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
@@ -559,6 +563,7 @@ public class CommandRegistry {
             try {
                 if (toRevoke instanceof PermanentAssignment) {
                     ((PermanentAssignment) toRevoke).revoke();
+                    system.getAuditLog().log("Revoke role", system.getCurrentUser(), username, "revoke-role revoked by: " + username);
                     System.out.println("Assignment revoked");
                 } else {
                     system.getAssignmentManager().remove(toRevoke);
@@ -971,6 +976,11 @@ public class CommandRegistry {
                 System.out.println("Exit cancelled");
             }
         }));
+
+        pars.registerCommand("audit-log", "Show log", ((scanner, args, system) -> {
+            system.getAuditLog().printLog();
+        }));
+
     }
 }
 
