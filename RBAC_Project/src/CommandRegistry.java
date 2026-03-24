@@ -677,7 +677,7 @@ public class CommandRegistry {
                 return;
             }
 
-            String newExpiration = ConsoleUtils.promptString(scanner, "New expiration date (yyyy-MM-ddTHH:mm:ss): ", true);
+            String newExpiration = ConsoleUtils.promptString(scanner, "New expiration date (yyyy-MM-dd HH:mm:ss): ", true);
 
             try {
                 system.getAssignmentManager().extendTemporaryAssignment(toExtend.assignmentId(), newExpiration);
