@@ -1,8 +1,10 @@
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserManager implements Repository<User> {
-    Map<String, User> users = new HashMap<>();
+    Map<String, User> users = new ConcurrentHashMap<>();
+    Object object = new Object();
 
     public Optional<User> findByUsername(String username){
         return Optional.ofNullable(users.get(username));
@@ -19,25 +21,26 @@ public class UserManager implements Repository<User> {
 
     public List<User> findByFilter(UserFilter filter){
         List<User> result = new ArrayList<>();
-
-        for (User user : users.values()) {
-            if (filter.test(user)) {
-                result.add(user);
+        synchronized (object) {
+            for (User user : users.values()) {
+                if (filter.test(user)) {
+                    result.add(user);
+                }
             }
         }
-
         return result;
     }
 
     public List<User> findAll(UserFilter filter, Comparator<User> sorter){
         List<User> result = new ArrayList<>();
-
-        for (User user : users.values()) {
-            if (filter.test(user)) {
-                result.add(user);
+        synchronized (object) {
+            for (User user : users.values()) {
+                if (filter.test(user)) {
+                    result.add(user);
+                }
             }
+            Collections.sort(result, sorter);
         }
-        Collections.sort(result, sorter);
         return result;
     }
 
@@ -49,9 +52,11 @@ public class UserManager implements Repository<User> {
         if (username == null || username.trim().isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
-        if(exists(username)){
-            User user = User.create(username, newFullName, newEmail);
-            users.put(username, user);
+        synchronized (object) {
+            if (exists(username)) {
+                User user = User.create(username, newFullName, newEmail);
+                users.put(username, user);
+            }
         }
     }
 
@@ -61,16 +66,20 @@ public class UserManager implements Repository<User> {
         if (user.username() == null || user.username().trim().isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
-        if (users.containsKey(user.username())){
-            System.out.println("Element: " + user.format() + " already in Map!");
-        } else {
-            users.put(user.username(), user);
+        synchronized (object) {
+            if (users.containsKey(user.username())) {
+                System.out.println("Element: " + user.format() + " already in Map!");
+            } else {
+                users.put(user.username(), user);
+            }
         }
     }
 
     @Override
     public boolean remove(User user){
-        return users.remove(user.username()) != null;
+        synchronized (object) {
+            return users.remove(user.username()) != null;
+        }
     }
 
     @Override
@@ -81,8 +90,10 @@ public class UserManager implements Repository<User> {
     @Override
     public List<User> findAll(){
         List<User> userlist = new ArrayList<>();
-        for (User user : users.values()){
-            userlist.add(user);
+        synchronized (object) {
+            for (User user : users.values()) {
+                userlist.add(user);
+            }
         }
         return userlist;
     }
