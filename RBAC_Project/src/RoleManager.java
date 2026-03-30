@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class RoleManager implements Repository<Role> {
     Map<String, Role> rolesById = new ConcurrentHashMap<>();
@@ -20,6 +21,19 @@ public class RoleManager implements Repository<Role> {
             }
         }
         return result;
+    }
+
+    public List<Role> findByFilterParallel(RoleFilter filter) {
+        return rolesById.values().parallelStream()
+                .filter(filter::test)
+                .collect(Collectors.toList());
+    }
+
+    public List<Role> findByFilterParallel(RoleFilter filter, Comparator<Role> sorter) {
+        return rolesById.values().parallelStream()
+                .filter(filter::test)
+                .sorted(sorter)
+                .collect(Collectors.toList());
     }
 
     public List<Role> findAll(RoleFilter filter, Comparator<Role> sorter) {

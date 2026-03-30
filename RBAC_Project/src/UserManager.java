@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class UserManager implements Repository<User> {
     Map<String, User> users = new ConcurrentHashMap<>();
@@ -29,6 +30,19 @@ public class UserManager implements Repository<User> {
             }
         }
         return result;
+    }
+
+    public List<User> findByFilterParallel(UserFilter filter) {
+        return users.values().parallelStream()
+                .filter(filter::test)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> findByFilterParallel(UserFilter filter, Comparator<User> sorter) {
+        return users.values().parallelStream()
+                .filter(filter::test)
+                .sorted(sorter)
+                .collect(Collectors.toList());
     }
 
     public List<User> findAll(UserFilter filter, Comparator<User> sorter){
