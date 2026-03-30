@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class AssignmentManager implements Repository<RoleAssignment> {
     Map<String, RoleAssignment> assignments = new ConcurrentHashMap<>();
@@ -46,6 +47,19 @@ public class AssignmentManager implements Repository<RoleAssignment> {
             }
         }
         return result;
+    }
+
+    public List<RoleAssignment> findByFilterParallel(AssignmentFilter filter) {
+        return assignments.values().parallelStream()
+                .filter(filter::test)
+                .collect(Collectors.toList());
+    }
+
+    public List<RoleAssignment> findByFilterParallel(AssignmentFilter filter, Comparator<RoleAssignment> sorter) {
+        return assignments.values().parallelStream()
+                .filter(filter::test)
+                .sorted(sorter)
+                .collect(Collectors.toList());
     }
 
     public List<RoleAssignment> findAll(AssignmentFilter filter, Comparator<RoleAssignment> sorter) {

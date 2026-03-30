@@ -3,15 +3,33 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 public class AuditLog {
 
     public List<AuditEntry> entries = new ArrayList<>();
+    private BlockingQueue<AuditEntry> queue = new LinkedBlockingQueue<>();
+    private Thread worker;
+
+    public AuditLog() {
+        worker = new Thread(() -> {
+            while (true) {
+                try {
+                    AuditEntry entry = queue.take();
+                    entries.add(entry);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        });
+        worker.setDaemon(true);
+        worker.start();
+    }
 
     public void log(String action, String performer, String target, String details) {
-        AuditEntry entry = AuditEntry.now(action, performer, target, details);
-        entries.add(entry);
+        queue.offer(AuditEntry.now(action, performer, target, details));
     }
 
     public List<AuditEntry> getAll() {

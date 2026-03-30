@@ -1,5 +1,7 @@
 import java.util.*;
 
+import static java.lang.Thread.sleep;
+
 public class CommandRegistry {
     public void RegistryAllCommands(CommandParser pars){
         pars.registerCommand("user-list", "Output all users", ((scanner, args, system) -> {
@@ -933,6 +935,37 @@ public class CommandRegistry {
             System.out.println(report);
         }));
 
+        pars.registerCommand("report-users-async", "Generate users report in other thread!", ((scanner, args, system) -> {
+            System.out.println("Users-report generating in other thread...");
+
+            system.getBackgroundExecutor().submit(() -> {
+                try {
+                    Thread.sleep(10000);
+                    String report = ReportGenerator.generateUserReport(
+                            system.getUserManager(),
+                            system.getAssignmentManager()
+                    );
+                    ReportGenerator.exportToFile(report, "user_report.txt");
+                    system.getAuditLog().log("Report-Users", system.getCurrentUser(), "user_report.txt", "Created report-users in other thread");
+                } catch (Exception e){
+                    System.err.println("Error in generating user-report in other thread: " + e.getMessage());
+                }
+            });
+        }));
+
+        pars.registerCommand("save-async", "Save statistic in file in other thread", ((scanner, args, system) -> {
+            System.out.println("Saving sats in other thread...");
+            system.getBackgroundExecutor().submit(() -> {
+                try {
+                    String stats = system.generateStatistics();
+                    ReportGenerator.exportToFile(stats, "System_stats.txt");
+                    system.getAuditLog().log("System_stats", system.getCurrentUser(), "System_stats.txt", "Created stats in other thread");
+                    System.out.println("Stats saved successfully!");
+                } catch (Exception e){
+                    System.err.println("Error to save stats in file: " + e.getMessage());
+                }
+            });
+        }));
     }
 }
 

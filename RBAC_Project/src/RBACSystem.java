@@ -8,6 +8,7 @@ public class RBACSystem {
     private AssignmentManager assignmentManager;
     private String currentUser;
     private AuditLog AuditLog;
+    private BackgroundExecutor backgroundExecutor;
 
     public RBACSystem(UserManager userManager, RoleManager roleManager, AssignmentManager assignmentManager, String currentUser) {
         this.userManager = userManager;
@@ -15,6 +16,15 @@ public class RBACSystem {
         this.assignmentManager = assignmentManager;
         this.currentUser = currentUser;
         this.AuditLog = new AuditLog();
+        this.backgroundExecutor = new BackgroundExecutor(4);
+    }
+
+    public BackgroundExecutor getBackgroundExecutor(){
+        return backgroundExecutor;
+    }
+
+    public void shutdownBackgroundExecutor(){
+        backgroundExecutor.shutdown();
     }
 
     public AuditLog getAuditLog(){
