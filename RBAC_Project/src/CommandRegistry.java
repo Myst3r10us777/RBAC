@@ -428,14 +428,14 @@ public class CommandRegistry {
             int roleChoice = ConsoleUtils.promptInt(scanner, "Select role number: ", 1, roles.size());
             Role role = roles.get(roleChoice - 1);
 
-            String type = ConsoleUtils.promptString(scanner, "Assignment type (PERMANENT/TEMPORARY): ", true).toUpperCase();
-            if (!type.equals("PERMANENT") && !type.equals("TEMPORARY")) {
+            String type = ConsoleUtils.promptString(scanner, "Assignment type (PER/TEM): ", true).toUpperCase();
+            if (!type.equals("PER") && !type.equals("TEM")) {
                 System.out.println("Invalid type. Using PERMANENT");
                 type = "PERMANENT";
             }
 
             String expiresAt = null;
-            if (type.equals("TEMPORARY")) {
+            if (type.equals("TEM")) {
                 expiresAt = ConsoleUtils.promptString(scanner, "Expiration date (yyyy-MM-ddTHH:mm:ss): ", true);
             }
 
@@ -444,7 +444,7 @@ public class CommandRegistry {
             try {
                 AssignmentMetadata metadata = AssignmentMetadata.now(system.getCurrentUser(), reason);
                 RoleAssignment assignment;
-                if (type.equals("TEMPORARY")) {
+                if (type.equals("TEM")) {
                     assignment = new TemporaryAssignment(user, role, metadata, expiresAt, false);
                 } else {
                     assignment = new PermanentAssignment(user, role, metadata);
@@ -561,8 +561,12 @@ public class CommandRegistry {
                         ra.metadata().reason() != null ? ra.metadata().reason() : "-",
                         ra instanceof TemporaryAssignment ? ((TemporaryAssignment) ra).expiresAt : "-"
                 });
+                if (ra instanceof TemporaryAssignment) {
+                    System.out.println(((TemporaryAssignment) ra).summary());
+                }
             }
             System.out.println(FormatUtils.formatTable(headers, rows));
+
         }));
 
         pars.registerCommand("assignment-list-role", "List users with specific role", ((scanner, args, system) -> {
@@ -974,6 +978,14 @@ public class CommandRegistry {
             int ops = Integer.parseInt(scanner.nextLine().trim());
 
             TestSystem.run(system, threads, ops);
+        }));
+
+        pars.registerCommand("start-scheduler", "Start scheduled tasks (check expired assignments)", ((scanner, args, system) -> {
+            System.out.print("Interval in seconds: ");
+            int interval = Integer.parseInt(scanner.nextLine().trim());
+
+            system.startScheduledTasks(interval);
+            System.out.println("Scheduler started (every " + interval + " seconds)");
         }));
     }
 }
