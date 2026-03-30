@@ -966,6 +966,15 @@ public class CommandRegistry {
                 }
             });
         }));
+
+        pars.registerCommand("system-test", "Run load test", ((scanner, args, system) -> {
+            System.out.print("Threads: ");
+            int threads = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Actions: ");
+            int ops = Integer.parseInt(scanner.nextLine().trim());
+
+            TestSystem.run(system, threads, ops);
+        }));
     }
 }
 
