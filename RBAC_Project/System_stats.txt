@@ -1,0 +1,48 @@
+
+
+
+System statistic:
+Total users: 3
+Users:
+1) fvfvf vfvfvfvfv qweqweqw@asd.com
+2) ADMIN ADMIN admin@gmail.com
+3) rrrrr rrrrrrrrr qwqeqw@adasd.com
+
+
+Total roles: 3
+Roles:
+1)Role: Admin [ID: role_9737f6ea-4d11-4e0e-abe0-39e79379cd99]
+Description: Created by system
+Permissions (9):
+	 - READ on users: Read users
+	 - READ on roles: Read roles
+	 - DELETE on users: Delete users
+	 - DELETE on roles: Delete roles
+	 - READ on assignments: Read assignments
+	 - DELETE on assignments: Delete assignments
+	 - WRITE on assignments: Write assignments
+	 - WRITE on users: Write users
+	 - WRITE on roles: Write roles
+
+2)Role: Manager [ID: role_dd534370-cd5d-4811-beea-7789288ad087]
+Description: Created by system
+Permissions (6):
+	 - READ on users: Read users
+	 - READ on roles: Read roles
+	 - READ on assignments: Read assignments
+	 - WRITE on assignments: Write assignments
+	 - WRITE on users: Write users
+	 - WRITE on roles: Write roles
+
+3)Role: Viewer [ID: role_2eb7e2d7-65dc-4625-bced-b45496ba8bb0]
+Description: Created by system
+Permissions (3):
+	 - READ on users: Read users
+	 - READ on roles: Read roles
+	 - READ on assignments: Read assignments
+
+
+
+Total assignments: 1
+Assignments:
+  1) ADMIN -> Admin [PERMANENT] (ACTIVE)
