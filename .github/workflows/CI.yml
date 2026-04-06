@@ -11,4 +11,4 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - run: find RBAC_Project/src -name "*.java" ! -name "*Test*.java" > sources.txt && javac @sources.txt
+      - run: find RBAC_Project -name "*.java" > sources.txt && javac @sources.txt
