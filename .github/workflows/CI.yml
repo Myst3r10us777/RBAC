@@ -11,4 +11,4 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - run: javac RBAC_Project/src/Main.java
+      - run: javac RBAC_Project/src/*.java
