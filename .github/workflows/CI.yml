@@ -13,7 +13,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       
-      - name: Compile project
+      - name: Compile main code
         run: |
           cd RBAC_Project/src/allfiles
           javac *.java
+      
+      - name: Compile tests
+        run: |
+          cd RBAC_Project/tests
+          javac -cp ".:../src/allfiles:junit-platform-console-standalone-1.10.2.jar" *.java
+      
+      - name: Run tests
+        run: |
+          cd RBAC_Project/tests
+          java -jar junit-platform-console-standalone-1.10.2.jar --class-path .:../src/allfiles --scan-class-path
