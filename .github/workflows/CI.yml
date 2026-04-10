@@ -20,10 +20,10 @@ jobs:
       
       - name: Compile tests
         run: |
-          cd RBAC_Project/tests
+          cd RBAC_Project/src/tests
           javac -cp ".:../src/allfiles:junit-platform-console-standalone-1.10.2.jar" *.java
       
       - name: Run tests
         run: |
-          cd RBAC_Project/tests
+          cd RBAC_Project/src/tests
           java -jar junit-platform-console-standalone-1.10.2.jar --class-path .:../src/allfiles --scan-class-path
