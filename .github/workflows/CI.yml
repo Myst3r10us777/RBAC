@@ -41,9 +41,9 @@ jobs:
       
       - name: Compile tests
         run: |
-          cd RBAC_Project/src/tests
-          javac -cp ".:../../out:../../junit-platform-console-standalone.jar" *.java
-
+          cd RBAC_Project
+          javac -cp "junit-platform-console-standalone.jar:out" -d out src/tests/*.java
+     
       - name: Check compiled structure
         run: |
           cd RBAC_Project
