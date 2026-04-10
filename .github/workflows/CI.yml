@@ -44,18 +44,7 @@ jobs:
           cd RBAC_Project/src/tests
           javac -cp ".:../../out:../../junit-platform-console-standalone.jar" *.java
      
-      - name: Check compiled test classes
-        run: |
-          cd RBAC_Project
-          echo "=== Checking if test .class files exist ==="
-          find out -name "*Test*.class" 2>/dev/null || echo "No test classes found in out"
-          echo "=== Checking source test files ==="
-          ls -la src/tests/*.java
-          echo "=== Checking if tests have @Test ==="
-          grep -l "@Test" src/tests/*.java || echo "No @Test annotations found"
-      
       - name: Run tests
         run: |
           cd RBAC_Project
-          java -jar junit-platform-console-standalone.jar --class-path out:src/tests --scan-class-path
-          echo "Test report generated"
+          java -jar junit-platform-console-standalone.jar --class-path out --include-classname '.*Test.*' --scan-class-path
