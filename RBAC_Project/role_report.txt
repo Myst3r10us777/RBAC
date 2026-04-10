@@ -1,6 +1,6 @@
 Roles Report:
 --------------------------------------------------------------------------------
-Role: Admin, Count users:1
-Role: Viewer, Count users:0
-Role: Manager, Count users:0
+java.Role: Admin, Count users:1
+java.Role: Viewer, Count users:0
+java.Role: Manager, Count users:0
 --------------------------------------------------------------------------------

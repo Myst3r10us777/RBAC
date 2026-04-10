@@ -11,7 +11,7 @@ Users:
 
 Total roles: 3
 Roles:
-1)Role: Admin [ID: role_9737f6ea-4d11-4e0e-abe0-39e79379cd99]
+1)java.Role: Admin [ID: role_9737f6ea-4d11-4e0e-abe0-39e79379cd99]
 Description: Created by system
 Permissions (9):
 	 - READ on users: Read users
@@ -24,7 +24,7 @@ Permissions (9):
 	 - WRITE on users: Write users
 	 - WRITE on roles: Write roles
 
-2)Role: Manager [ID: role_dd534370-cd5d-4811-beea-7789288ad087]
+2)java.Role: Manager [ID: role_dd534370-cd5d-4811-beea-7789288ad087]
 Description: Created by system
 Permissions (6):
 	 - READ on users: Read users
@@ -34,7 +34,7 @@ Permissions (6):
 	 - WRITE on users: Write users
 	 - WRITE on roles: Write roles
 
-3)Role: Viewer [ID: role_2eb7e2d7-65dc-4625-bced-b45496ba8bb0]
+3)java.Role: Viewer [ID: role_2eb7e2d7-65dc-4625-bced-b45496ba8bb0]
 Description: Created by system
 Permissions (3):
 	 - READ on users: Read users

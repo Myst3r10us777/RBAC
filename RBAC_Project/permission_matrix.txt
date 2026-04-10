@@ -1,5 +1,5 @@
-Permission Matrix:
+java.Permission Matrix:
 --------------------------------------------------------------------------------
-User/Resource        | assignments | roles      | users     
+java.User/Resource        | assignments | roles      | users
 ----------------------------------------------------------------------------------------------------
 ADMIN                | READ,DELETE,WRITE | READ,DELETE,WRITE | READ,DELETE,WRITE
