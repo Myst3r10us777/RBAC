@@ -48,3 +48,4 @@ jobs:
         run: |
           cd RBAC_Project
           java -jar junit-platform-console-standalone.jar --class-path out:src/tests --scan-class-path
+          echo "Test report generated"
